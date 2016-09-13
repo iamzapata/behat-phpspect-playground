@@ -18,10 +18,4 @@ class ProductSpec extends ObjectBehavior
    	{
    		$this->beConstructedWith($name, $price);
    	}
-
-    function it_should_store_name()
-    {
-
-
-    }
 }

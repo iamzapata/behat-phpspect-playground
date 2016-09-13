@@ -16,12 +16,19 @@ class ShelfSpec extends ObjectBehavior
         $this->shouldHaveType('App\Shelf');
     }  
 
-    function it_sets_product_price(Product $product, Price $price)
+    function it_sets_product(Product $product)
     {
 
-    	$this->setProductPrice($product, $price);
+    	$this->setProduct($product);
     	$this->products->shouldContain($product);
-    	$this->products[0]->price->shouldEqual($price);
+    }
+
+    function it_should_return_given_product_by_name()
+    {
+    	$name = "Tamagotchi";
+    	$product = new Product($name, 100);
+    	$this->setProduct($product);
+    	$this->getProduct($name)->shouldReturn($product);
     }
 
 }

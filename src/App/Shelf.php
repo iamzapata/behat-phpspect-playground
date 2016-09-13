@@ -9,16 +9,21 @@ class Shelf
 {
 	public $products;
 
-    public function setProductPrice(Product $product, Price $price)
-    {
-    	$product->price = $price;
+    public function setProduct(Product $product)
+    {    
         $this->products[] = $product;
     }
 
-    public function getProductPrice($product)
+    public function getProduct($name)
     {
-        
-    }
+        foreach ($this->products as $product) {
+        	
+        	if($product->name == $name)
+        	{
+        		return $product;
+        	}
 
+        }
+    }
 
 }

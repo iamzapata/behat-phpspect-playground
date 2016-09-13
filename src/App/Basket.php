@@ -10,20 +10,26 @@ use App\Product;
 class Basket implements Countable
 {
 
-	public $products;
+    private $amountInBasket = [];
 
-	public $basketPrice = 0.0;
-
-	public $shelf;
-
-	public function __construct(Shelf $shelf)
-	{
-		$this->shelf = $shelf;
-	}
-
-    public function addProduct(Product $product)
+    public function addProduct($product)
     {
-    	$this->products[] = $product;
+        $this->products[] = $product;
+    }
+
+    public function getTotalPrice()
+    {
+        $productPrices = [];
+
+        foreach ($this->products as $product) {
+
+
+
+            $productPrices[] = $product->price;
+            
+        }
+
+        return $this->calculateShipping(array_sum($productPrices) * 1.20);
     }
 
     public function count()
@@ -31,8 +37,20 @@ class Basket implements Countable
         return count($this->products);
     }
 
-    public function getTotalPrice()
+    private function calculateShipping($productPrices)
     {
-    	
+        if($productPrices >= 100)
+        {
+            return $productPrices;
+        }
+
+        if($productPrices < 10)
+        {
+            return $productPrices + 3;
+        }
+
+        return $productPrices + 2;
+
     }
+
 }

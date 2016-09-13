@@ -23,36 +23,36 @@ class FeatureContext implements Context, SnippetAcceptingContext
         $this->shelf = new Shelf;
         $this->basket = new Basket;
     }
-    
 
     /**
-     * @Given there is a Product :productName, which costs £:productPrice
+     * @Given there is a Product :product, which costs Price £:price
      */
-    public function thereIsAProductWhichCostsPs($productName, $productPrice)
+    public function thereIsAProductWhichCostsPricePs($product, $price)
     {
-        $product = new Product($product);
-        $price = new Price(floatval($price));
-        $this->shelf->setProductPrice($product, $price);
+        $product = new Product($product, $price);
+        $this->shelf->setProduct($product);
+
     }
 
     /**
-     * @When I add the Product :productName to the basket
+     * @When I add the Product :product to the basket
      */
-    public function iAddTheProductToTheBasket($productName)
+    public function iAddTheProductToTheBasket($product)
     {
-        $product = new Product($product);
+        $product = $this->shelf->getProduct($product);
+
         $this->basket->addProduct($product);
     }
 
     /**
-     * @Then I should have :productCount product(s) in the basket
+     * @Then I should have :count product(s) in the basket
      */
-    public function iShouldHaveProductInTheBasket($productCount)
+    public function iShouldHaveProductInTheBasket($count)
     {
         PHPUnit_Framework_Assert::assertCount(
-            intval($productCount),
+            intval($count),
             $this->basket
-        );    
+        );   
     }
 
     /**
@@ -64,5 +64,6 @@ class FeatureContext implements Context, SnippetAcceptingContext
             floatval($price),
             $this->basket->getTotalPrice()
         );
+
     }
 }
